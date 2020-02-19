@@ -2,7 +2,6 @@ package com.kenzan.employees.controller;
 
 import com.kenzan.employees.models.Employees;
 import com.kenzan.employees.repositories.EmployeesRepository;
-import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -65,10 +64,16 @@ public class EmployeesController {
         repository.save(employees);
     }
 
-
     @RequestMapping(value = "deleteAll", method = RequestMethod.DELETE)
-    public void deleteAll() {
-        repository.deleteAll();
+    public String deleteAll(@RequestHeader(value = "token") String token) {
+        if (token.equals("admin")) {
+            repository.deleteAll();
+            return "deleted!";
+        }else
+        return "error";
     }
-
+    @RequestMapping(value = "hello", method = RequestMethod.GET)
+    public String helloWorld(@RequestParam(value="name", defaultValue="World") String name) {
+        return "Hello "+name+"!!";
+    }
 }

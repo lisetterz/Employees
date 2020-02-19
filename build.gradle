@@ -13,13 +13,24 @@ repositories {
 }
 
 dependencies {
+
 	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb-reactive'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
 	testImplementation 'io.projectreactor:reactor-test'
-}
+	testImplementation 'org.springframework.security:spring-security-test'
+
+	compile 'io.jsonwebtoken:jjwt:0.9.1'
+	compile("org.springframework.boot:spring-boot-starter-security")
+	compile("com.auth0:java-jwt:3.4.0")
+	compile('org.springframework.boot:spring-boot-starter-data-jpa')
+	compile("org.hsqldb:hsqldb")
+	}
 
 test {
 	useJUnitPlatform()

@@ -16,13 +16,4 @@ public interface EmployeesRepository extends MongoRepository<Employees, String> 
 
     @Query("{ 'FirstName' : ?0, 'Status' : 'ACTIVE' }")
     List<Employees> findByFirstName(String firstName);
-
-  /*
-    @Query("{ De")
-    updateOne(ObjectId id);
-
-   */
- /* Query query = new Query();
-query.addCriteria(Criteria.where("name").is("Eric"));
-    List<Employees> employees = mongoTemplate.find(query, Employees.class);*/
 }
