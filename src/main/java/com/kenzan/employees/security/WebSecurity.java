@@ -15,7 +15,8 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.context.annotation.Bean;
 
 import static com.kenzan.employees.security.SecurityConstants.DELETION_URL;
-import static com.kenzan.employees.security.SecurityConstants.SIGN_UP_URL;
+import static com.kenzan.employees.security.SecurityConstants.GETALL_URL;
+import static com.kenzan.employees.security.SecurityConstants.DELETEALL_URL;
 
 @EnableWebSecurity
 public class WebSecurity extends WebSecurityConfigurerAdapter {
@@ -32,6 +33,8 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
         http.cors().and().csrf().disable().authorizeRequests()
                 //.antMatchers(HttpMethod.POST, SIGN_UP_URL).permitAll()
                 .antMatchers(HttpMethod.DELETE, DELETION_URL).authenticated()
+                .antMatchers(HttpMethod.GET, GETALL_URL).authenticated()
+                .antMatchers(HttpMethod.DELETE, DELETEALL_URL).authenticated()
                 .and()
                 .addFilter(new JWTAuthenticationFilter(authenticationManager()))
                 .addFilter(new JWTAuthorizationFilter(authenticationManager()))

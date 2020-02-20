@@ -8,12 +8,13 @@ import org.springframework.data.mongodb.repository.Query;
 import java.util.List;
 
 public interface EmployeesRepository extends MongoRepository<Employees, String> {
-    @Query("{'ID': ?0, 'Status': 'ACTIVE'}")
-    Employees findByID(ObjectId ID);
+    @Query("{'id': ?0, 'status': 'ACTIVE'}")
+    Employees findByID(ObjectId id);
 
-    @Query("{ 'Status' : 'ACTIVE' }")
+    @Query("{ 'status' : 'ACTIVE' }")
     List<Employees> findAllActiveEmployees();
 
-    @Query("{ 'FirstName' : ?0, 'Status' : 'ACTIVE' }")
+    @Query("{ 'firstName' : ?0, 'status' : 'ACTIVE' }")
     List<Employees> findByFirstName(String firstName);
+
 }

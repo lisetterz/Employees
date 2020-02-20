@@ -26,54 +26,41 @@ public class EmployeesController {
 
     }
 
-    @RequestMapping(value = "getByName/{name}", method = RequestMethod.GET)
+    @RequestMapping(value = "/getByName/{name}", method = RequestMethod.GET)
     public List<Employees> findByName(@PathVariable("name") String name) {
         return repository.findByFirstName(name);
     }
 
 
     @RequestMapping(value = "/getByID/{id}", method = RequestMethod.GET)
-    public Employees getEmployeeById(@PathVariable("id") ObjectId ID) {
-        return repository.findByID(ID);
+    public Employees getEmployeeById(@PathVariable("id") ObjectId id) {
+        return repository.findByID(id);
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public Employees createEmployee(@Valid @RequestBody Employees employees) {
-        employees.setID(ObjectId.get());
+        employees.setId(ObjectId.get());
         repository.insert(employees);
         return employees;
     }
 
     @RequestMapping(value = "/update/{id}", method = RequestMethod.PUT)
     public Employees modifyEmployeeById(@PathVariable("id") ObjectId ID, @Valid @RequestBody Employees employees){
-        employees.setID(ID);
+        employees.setId(ID);
         repository.save(employees);
         return employees;
     }
-/*
+
     @RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE)
-    public void deleteEmployee(@PathVariable("id") ObjectId ID) {
-        repository.delete(repository.findByID(ID));
-    }
-*/
-    @RequestMapping(value = "delete/{id}", method = RequestMethod.DELETE)
-    public void deleteEmployee(@PathVariable("id") ObjectId ID) {
+    public void deleteEmployee(@PathVariable("id") ObjectId id) {
         Employees employees = new Employees();
-        employees = repository.findByID(ID);
+        employees = repository.findByID(id);
         employees.setStatus("INACTIVE");
         repository.save(employees);
     }
 
     @RequestMapping(value = "deleteAll", method = RequestMethod.DELETE)
-    public String deleteAll(@RequestHeader(value = "token") String token) {
-        if (token.equals("admin")) {
-            repository.deleteAll();
-            return "deleted!";
-        }else
-        return "error";
-    }
-    @RequestMapping(value = "hello", method = RequestMethod.GET)
-    public String helloWorld(@RequestParam(value="name", defaultValue="World") String name) {
-        return "Hello "+name+"!!";
+    public void deleteAll() {
+       repository.deleteAll();
     }
 }

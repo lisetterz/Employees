@@ -7,21 +7,21 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "employee")
 public class Employees {
     @Id
-    public ObjectId ID;
-    private String FirstName;
-    private String MiddleInitial; //could be char
-    private String LastName;
-    private String DateOfBirth; //could be date
-    private String DateOfEmployment; //could be date
-    private String Status = "ACTIVE"; //Active or Innactive
+    public ObjectId id;
+    private String firstName;
+    private String middleInitial; //could be char
+    private String lastName;
+    private String dateOfBirth; //could be date
+    private String dateOfEmployment; //could be date
+    private String status = "ACTIVE"; //Active or Innactive
 
     public Employees(){
 
     }
-    public Employees(ObjectId ID, String FirstName, String MiddleInitial, String LastName, String DateOfBirth,
+    public Employees(ObjectId id, String firstName, String MiddleInitial, String LastName, String DateOfBirth,
                      String DateOfEmployment, String Status){
-        this.setID(ID);
-        this.setFirstName(FirstName);
+        this.setId(id);
+        this.setFirstName(firstName);
         this.setMiddleInitial(MiddleInitial);
         this.setLastName(LastName);
         this.setDateOfBirth(DateOfBirth);
@@ -30,60 +30,60 @@ public class Employees {
     }
 
 
-    public String getID() {
-        return ID.toHexString();
+    public String getId() {
+        return id.toHexString();
     }
 
-    public void setID(ObjectId ID) {
-        this.ID = ID;
+    public void setId(ObjectId id) {
+        this.id = id;
     }
 
     public String getFirstName() {
-        return FirstName;
+        return firstName;
     }
 
     public void setFirstName(String firstName) {
-        FirstName = firstName;
+        this.firstName = firstName;
     }
 
     public String getMiddleInitial() {
-        return MiddleInitial;
+        return middleInitial;
     }
 
     public void setMiddleInitial(String middleInitial) {
-        MiddleInitial = middleInitial;
+        this.middleInitial = middleInitial;
     }
 
     public String getLastName() {
-        return LastName;
+        return lastName;
     }
 
     public void setLastName(String lastName) {
-        LastName = lastName;
+        this.lastName = lastName;
     }
 
     public String getDateOfBirth() {
-        return DateOfBirth;
+        return dateOfBirth;
     }
 
     public void setDateOfBirth(String dateOfBirth) {
-        DateOfBirth = dateOfBirth;
+        this.dateOfBirth = dateOfBirth;
     }
 
     public String getDateOfEmployment() {
-        return DateOfEmployment;
+        return dateOfEmployment;
     }
 
     public void setDateOfEmployment(String dateOfEmployment) {
-        DateOfEmployment = dateOfEmployment;
+        this.dateOfEmployment = dateOfEmployment;
     }
 
     public String getStatus() {
-        return Status;
+        return status;
     }
 
     public void setStatus(String status) {
-        Status = status;
+        this.status = status;
     }
 
 

@@ -1,5 +1,7 @@
 package com.kenzan.employees;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kenzan.employees.models.Employees;
 import com.kenzan.employees.repositories.EmployeesRepository;
 import com.kenzan.employees.security.JWTAuthorizationFilter;
@@ -16,6 +18,9 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import java.io.File;
+import java.util.List;
 
 @SpringBootApplication
 public class EmployeesApplication implements CommandLineRunner {
@@ -34,39 +39,17 @@ public class EmployeesApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
-		repository.deleteAll();
+		//create ObjectMapper instance
+		ObjectMapper objectMapper = new ObjectMapper();
 
-		// Saving Employees
-		repository.save(new Employees((ObjectId.get()),
-				"Lisette",
-				"M",
-				"Ramirez",
-				"09051994",
-				 "02142020",
-				"ACTIVE"));
+		//read json file and convert to customer object
 
-		repository.save(new Employees((ObjectId.get()),
-				"Vanessa",
-				"M",
-				"Gonzales",
-				"10061993",
-				"02172020",
-				"ACTIVE"));
+		ObjectMapper mapper = new ObjectMapper();
+		List<Employees> employees = mapper.reader()
+				.forType(new TypeReference<List<Employees>>() {})
+				.readValue(new File("src/main/resources/employeesRecords.json"));
+
+		repository.saveAll(employees);
 	}
-
-	/*
-	@EnableWebSecurity
-	@Configuration
-	class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-
-		@Override
-		protected void configure(HttpSecurity http) throws Exception {
-			http.csrf().disable()
-					.addFilterAfter(new JWTAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class)
-					.authorizeRequests()
-					.antMatchers(HttpMethod.DELETE, "/").permitAll()
-					.anyRequest().authenticated();
-		}
-	}*/
 }
 
