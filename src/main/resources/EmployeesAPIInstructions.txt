@@ -1,0 +1,127 @@
+
+
+*Employees RESTFUL API Instructions
+
+pre-requirements:
+to have mongodb installed with data/db directory.
+
+Notes:
+For all the records, id will be generated on the fly.
+For all the records, stauts will be set as 'ACTIVE' by default.
+Therefore, above fields are not required in the json format.
+Saple Json file is attached within src/main/resources directory and it's named EmployeesRecords.json. This data will be ingested when running the application (EmployeesApplication class). All the id's values will be generated on the fly.
+Admin functions require authentication before they can be executed. Authentication is explained forward.
+
+project base URL
+http://localhost:8080
+
+Controller REST URIs
+Employees user operations:
+
+//Get all Active employees
+HTTPMethod: GET
+uri: employees/getAllActive
+CURL:
+curl http://localhost:8080/employees/getAllActive
+
+//Get employee by name
+HTTPMethod: GET
+uri: employees/getByName/{name}
+CURL:
+curl http://localhost:8080/employees/getByName/Lisette
+
+//Get employee by id
+HTTPMethod: GET
+uri: employees/getByID/{id}
+CURL:
+curl http://localhost:8080/employees/getByID/5e4de255b84a545ed22e48f2
+
+//Add employee
+HTTPMethod: POST
+uri: employees/add
+Content-Type: application/json
+sample parameter: {"firstName":"Alex", "middleInitial":"L", "lastName":"Solis", "dateOfBirth":"10241981","dateOfEmployment":"02152020"}
+CURL:
+curl -H "Content-Type: application/json" -X POST -d '{"firstName":"Alex", "middleInitial":"L", "lastName":"Solis", "dateOfBirth":"10241981","dateOfEmployment":"02152020"}' http://localhost:8080/employees/add
+
+//Update employee. You'll need to know the id of the record that you want to update.
+HTTPMethod: PUT
+uri: employees//update/{id}
+Content-Type: application/json
+sample parameter: {
+    "firstName":"Raul", "middleInitial":"A", "lastName":"Almazan", "dateOfBirth":"10091980",
+    "dateOfEmployment":"06232019"} 
+   //updating middleInitial to A
+CURL:
+//To Update a Record, type the command below
+curl -i -H "Content-Type: application/json" -X PUT -d '{"firstName":"Oscar","middleInitial":"A","lastName":"Chavez","dateOfBirth":"09201982","dateOfEmployment":"09212019","status":"ACTIVE"}' http://localhost:8080/employees/update/5e4de255b84a545ed22e48f6
+
+Employees admin operations *Authentication required*:
+AUTHENTICATION***
+//Step 1. User Sign up. Only needed once.
+HTTPMethod: POST
+uri: users/sign-up
+Content-Type: application/json
+sample parameter:
+{ 
+    "username": "admin",
+    "password": "password"
+}
+CURL: 
+# registers a new user
+curl -H "Content-Type: application/json" -X POST -d '{
+    "username": "admin",
+    "password": "password"
+}' http://localhost:8080/users/sign-up
+
+
+//Step 2. User Login
+HTTPMethod: POST
+uri: login
+Content-Type: application/json
+sample parameter:
+{ 
+    "username": "admin",
+    "password": "password"
+}
+CURL:
+# logs into the application (JWT is generated)
+curl -i -H "Content-Type: application/json" -X POST -d '{
+    "username": "admin",
+    "password": "password"
+}' http://localhost:8080/login
+#remember to copy the Athorization value retreived in this request for the below requests.
+**
+
+//Get all employees (ACTIVE and INACTIVE)
+HttpMethod: GET
+uri: employees/getAll
+CURL:
+# remember to replace xxx.yyy.zzz with the JWT retrieved above in Step 2.
+curl -H "Content-Type: application/json" \
+-H "Authorization: Bearer xxx.yyy.zzz" \
+http://localhost:8080/employees/getAll
+
+//Delete employee
+HttpMethod: DELETE
+uri: employees/delete/{id}
+CURL:
+# remember to replace xxx.yyy.zzz with the JWT retrieved above in Step 2.
+curl -H "Content-Type: application/json" \
+-H "Authorization: Bearer xxx.yyy.zzz" \
+-X DELETE http://localhost:8080/employees/deleteAll
+
+///Delete permanently all employees
+HttpMethod: DELETE
+uri: employees/deleteAll
+CURL:
+# remember to replace xxx.yyy.zzz with the JWT retrieved above in Step 2.
+curl -H "Content-Type: application/json" \
+-H "Authorization: Bearer xxx.yyy.zzz" \
+-X DELETE http://localhost:8080/employees/deleteAll
+
+//Logout
+
+
+Author: Lisette Ramirez Zambada
+For any questions please reach me by email: ing.lisetterz@gmail.com
